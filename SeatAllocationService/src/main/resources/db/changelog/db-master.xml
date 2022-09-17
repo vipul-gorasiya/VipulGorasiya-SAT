@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+    <changeSet id="1" author="Vipul Gorasiya">
+        <createTable tableName="country">
+            <column name="id" type="varchar(20)">
+                <constraints primaryKey="true" primaryKeyName="country_pk"/>
+            </column>
+            <column name="name" type="varchar(250)">
+                <constraints unique="true" uniqueConstraintName="country_name_unique"/>
+            </column>
+        </createTable>
+        <createTable tableName="city">
+            <column name="id" type="varchar(20)">
+                <constraints primaryKey="true" primaryKeyName="city_id_pk"/>
+            </column>
+            <column name="name" type="varchar(250)"/>
+            <column name="country_id" type="varchar(20)">
+                <constraints foreignKeyName="city_country_fk" referencedTableName="Country" referencedColumnNames="id"/>
+            </column>
+        </createTable>
+        <createTable tableName="building">
+            <column name="id" type="varchar(20)">
+                <constraints primaryKey="true" primaryKeyName="building_id_pk"/>
+            </column>
+            <column name="name" type="varchar(250)"/>
+            <column name="city_id" type="varchar(20)">
+                <constraints foreignKeyName="building_city_fk" referencedTableName="city" referencedColumnNames="id"/>
+            </column>
+        </createTable>
+        <createTable tableName="building_floor">
+            <column name="id" type="varchar(20)">
+                <constraints primaryKey="true" primaryKeyName="building_floor_id_pk"/>
+            </column>
+            <column name="name" type="varchar(250)"/>
+            <column name="building_id" type="varchar(20)">
+                <constraints foreignKeyName="building_floor_fk" referencedTableName="building"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+        <createTable tableName="organization_entity">
+            <column name="id" type="varchar(20)">
+                <constraints primaryKey="true" primaryKeyName="organization_entity_pk"/>
+            </column>
+            <column name="name" type="varchar(250)">
+                <constraints unique="true" uniqueConstraintName="organization_entity_name_unique"/>
+            </column>
+            <column name="parent_oe" type="varchar(20)">
+                <constraints foreignKeyName="parent_oe_fk" referencedTableName="organization_entity"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+        <createTable tableName="employee">
+            <column name="id" type="varchar(20)">
+                <constraints primaryKey="true" primaryKeyName="employee_pk"/>
+            </column>
+            <column name="name" type="varchar(250)">
+                <constraints unique="true" uniqueConstraintName="employee_name_unique"/>
+            </column>
+            <column name="oe" type="varchar(20)">
+                <constraints foreignKeyName="employee_oe_fk" referencedTableName="organization_entity"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+        <sqlFile path="sql/initial-data.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+</databaseChangeLog>
