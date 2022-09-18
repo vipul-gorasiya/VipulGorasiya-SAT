@@ -16,8 +16,8 @@ public class OrganizationEntityService {
         this.oeRepository = oeRepository;
     }
 
-    public List<String> getTopOes() {
-        return oeRepository.findWhereParentOeIsNull()
+    public List<String> getOes(String parentOe) {
+        return oeRepository.findByParentOe(parentOe)
                 .stream()
                 .map(OrganizationEntity::getName)
                 .collect(Collectors.toList());

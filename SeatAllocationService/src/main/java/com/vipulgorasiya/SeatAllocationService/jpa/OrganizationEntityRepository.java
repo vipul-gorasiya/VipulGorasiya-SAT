@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface OrganizationEntityRepository extends JpaRepository<OrganizationEntity, String> {
 
-    List<OrganizationEntity> findWhereParentOeIsNull();
+    List<OrganizationEntity> findByParentOe(String parentOe);
 }

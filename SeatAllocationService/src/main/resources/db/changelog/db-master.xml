@@ -52,6 +52,8 @@
                 <constraints foreignKeyName="parent_oe_fk" referencedTableName="organization_entity"
                              referencedColumnNames="id"/>
             </column>
+            <column name="seats" type="int">
+            </column>
         </createTable>
         <createTable tableName="employee">
             <column name="id" type="varchar(20)">
